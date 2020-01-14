@@ -36,8 +36,9 @@ PLATFORM = PC
 
 MAKE = make
 
-LINUX_SRC = /lib/modules/$(shell uname -r)/build
-LINUX_SRC_MODULE = /lib/modules/$(shell uname -r)/kernel/drivers/net/wireless/
+KERNELRELEASE = $(shell uname -r)
+LINUX_SRC = /lib/modules/$(KERNELRELEASE)/build
+LINUX_SRC_MODULE = /lib/modules/$(KERNELRELEASE)/kernel/drivers/net/wireless/
 CROSS_COMPILE =
 
 export OSABL RT28xx_DIR RT28xx_MODE LINUX_SRC CROSS_COMPILE CROSS_COMPILE_INCLUDE PLATFORM RELEASE CHIPSET MODULE RTMP_SRC_DIR LINUX_SRC_MODULE TARGET HAS_WOW_SUPPORT
@@ -53,7 +54,7 @@ release:
 	@echo "*** Building driver without debug messages ***"
 	@echo ""
 	cp -f os/linux/Makefile.6 $(RT28xx_DIR)/os/linux/Makefile
-	$(MAKE) -C $(LINUX_SRC) SUBDIRS=$(RT28xx_DIR)/os/linux modules
+	$(MAKE) -C $(LINUX_SRC) M=$(RT28xx_DIR)/os/linux modules
 
 debug:
 	export DBGFLAGS
@@ -61,7 +62,7 @@ debug:
 	@echo "*** Building driver with debug messages ***"
 	@echo ""
 	cp -f os/linux/Makefile.6 $(RT28xx_DIR)/os/linux/Makefile
-	$(MAKE) -C $(LINUX_SRC) DBGFLAGS=-DDBG SUBDIRS=$(RT28xx_DIR)/os/linux modules
+	$(MAKE) -C $(LINUX_SRC) DBGFLAGS=-DDBG M=$(RT28xx_DIR)/os/linux modules
 
 clean:
 	cp -f os/linux/Makefile.clean os/linux/Makefile
@@ -76,7 +77,3 @@ install:
 	$(MAKE) -C $(RT28xx_DIR)/os/linux -f Makefile.6 install
 
 .PHONY: $(PHONY)
-
-
-
-
