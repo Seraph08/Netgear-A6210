@@ -57,7 +57,7 @@ PNET_DEV RtmpPhyNetDevMainCreate(void *pAd);
 int rt28xx_close(void *dev);
 int rt28xx_open(void *dev);
 
-__inline int VIRTUAL_IF_UP(void *pAd)
+static inline int VIRTUAL_IF_UP(void *pAd)
 {
 	RT_CMD_INF_UP_DOWN InfConf = { rt28xx_open, rt28xx_close };
 	if (RTMP_COM_IoctlHandle(pAd, CMD_RTPRIV_IOCTL_VIRTUAL_INF_UP,
@@ -66,7 +66,7 @@ __inline int VIRTUAL_IF_UP(void *pAd)
 	return 0;
 }
 
-__inline void VIRTUAL_IF_DOWN(void *pAd)
+static inline void VIRTUAL_IF_DOWN(void *pAd)
 {
 	RT_CMD_INF_UP_DOWN InfConf = { rt28xx_open, rt28xx_close };
 	RTMP_COM_IoctlHandle(pAd, CMD_RTPRIV_IOCTL_VIRTUAL_INF_DOWN,
