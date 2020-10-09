@@ -504,11 +504,12 @@ int __init rtusb_init(void)
 		printk(KERN_ALERT "debugfs_create_dir failed\n");
 	}
 
-	tmp = debugfs_create_u32("RTDebugLevel", S_IWUSR | S_IRUGO, dbgfs_dir,
-			&RTDebugLevel);
-	if (!tmp) {
-		printk(KERN_ALERT "debugfs_create_u32 failed\n");
-	}
+	debugfs_create_u32("RTDebugLevel", S_IWUSR | S_IRUGO, dbgfs_dir, &RTDebugLevel);
+//      because debugfs_create_u32  return void in new kernel. 
+//	tmp = debugfs_create_u32("RTDebugLevel", S_IWUSR | S_IRUGO, dbgfs_dir, &RTDebugLevel);
+//	if (!tmp) {
+//		printk(KERN_ALERT "debugfs_create_u32 failed\n");
+//	}
 #endif
 	return usb_register(&rtusb_driver);
 }
