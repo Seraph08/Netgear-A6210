@@ -496,19 +496,13 @@ static struct dentry *dbgfs_dir = 0;
 int __init rtusb_init(void)
 {
 #ifdef DBG
-	struct dentry *tmp;
-
 	printk("rtusb init %s --->\n", RTMP_DRV_NAME);
 	dbgfs_dir = debugfs_create_dir(RTMP_DRV_NAME, 0);
 	if (!dbgfs_dir) {
 		printk(KERN_ALERT "debugfs_create_dir failed\n");
 	}
 
-	tmp = debugfs_create_u32("RTDebugLevel", S_IWUSR | S_IRUGO, dbgfs_dir,
-			&RTDebugLevel);
-	if (!tmp) {
-		printk(KERN_ALERT "debugfs_create_u32 failed\n");
-	}
+	debugfs_create_u32("RTDebugLevel", S_IWUSR | S_IRUGO, dbgfs_dir, &RTDebugLevel);
 #endif
 	return usb_register(&rtusb_driver);
 }
